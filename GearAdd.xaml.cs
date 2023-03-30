@@ -1,0 +1,68 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace AutoParts
+{
+    /// <summary>
+    /// Логика взаимодействия для GearAdd.xaml
+    /// </summary>
+    public partial class GearAdd : Window
+    {
+        AppContext db = new AppContext();
+        public GearAdd()
+        {
+            InitializeComponent();
+        }
+
+        private void GearAddBackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            GearWindow gearWindow = new GearWindow();
+            gearWindow.Show();
+            this.Close();
+        }
+
+        private void GearSaveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string mark = MarkGearTb.Text.Trim();
+            string type = TypeGearTb.Text.Trim();
+            string coast = CoastGearTb.Text.Trim();
+
+            if (mark.Length < 1)
+            {
+                MessageBox.Show("Все поля должны быть заполненными");
+            }
+            else if (type.Length < 1)
+            {
+                MessageBox.Show("Все поля должны быть заполненными");
+            }
+            else if (coast.Length < 1)
+            {
+                MessageBox.Show("Все поля должны быть заполненными");
+            }
+            else
+            {
+                MessageBox.Show("Изменения сохранены");
+
+                Gear gear = new Gear(mark, type, coast);
+                db.Gears.Add(gear);
+                db.SaveChanges();
+
+                GearWindow gearWindow = new GearWindow();
+                gearWindow.Show();
+                this.Close();
+
+            }
+        }
+    }
+}
